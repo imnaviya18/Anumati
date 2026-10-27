@@ -1,0 +1,17 @@
+{
+  "result": "PASS",
+  "case_number": "AICTE-2026-27-185293C2",
+  "checks": [
+    "institution intake and deficiency response history",
+    "Celery evidence processing",
+    "assigned scrutiny findings",
+    "EVC readiness/reservation/confirmation/committee report",
+    "accepted validity registration",
+    "pending renewal preserves accepted version",
+    "human renewal verification",
+    "authorised final decision",
+    "separate policy draft/validation/dry-run/approval/activation",
+    "owned mock sync reconciliation",
+    "bureau/workload/ageing and case history"
+  ]
+}

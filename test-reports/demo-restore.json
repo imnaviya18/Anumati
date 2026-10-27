@@ -1,0 +1,8 @@
+{
+  "result": "PASS",
+  "method": "pg_dump / pg_restore into a separate disposable database plus private-file archive restoration",
+  "cases": 6,
+  "audit_events": 67,
+  "verified_files": 5,
+  "source": "isolated synthetic demonstration only"
+}

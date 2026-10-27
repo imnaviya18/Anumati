@@ -1,0 +1,301 @@
+ Image anumati-demo-backend Building 
+ Image anumati-demo-worker Building 
+ Image anumati-demo-beat Building 
+ Image anumati-demo-frontend Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.15kB done
+#1 DONE 0.0s
+
+#2 [frontend internal] load build definition from Dockerfile
+#2 transferring dockerfile: 304B done
+#2 DONE 0.0s
+
+#3 [beat internal] load build definition from Dockerfile
+#3 transferring dockerfile: 343B done
+#3 DONE 0.0s
+
+#4 [worker internal] load metadata for docker.io/library/python:3.12-slim
+#4 ...
+
+#5 [frontend internal] load metadata for docker.io/library/nginx:alpine
+#5 DONE 2.1s
+
+#6 [frontend internal] load metadata for docker.io/library/node:22-alpine
+#6 DONE 2.7s
+
+#4 [worker internal] load metadata for docker.io/library/python:3.12-slim
+#4 ...
+
+#7 [frontend internal] load .dockerignore
+#7 transferring context: 58B done
+#7 DONE 0.0s
+
+#8 [frontend build 1/6] FROM docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914
+#8 resolve docker.io/library/node:22-alpine@sha256:fe4f6d74e20370acb04ad889077d14d0f64a9c8ea6a42bc60cddf1e844699914 done
+#8 DONE 0.0s
+
+#9 [frontend stage-1 1/3] FROM docker.io/library/nginx:alpine@sha256:a3554c0d0b48177b1413c26e01f695334428020d9df01243fbae3e11cfd17417
+#9 resolve docker.io/library/nginx:alpine@sha256:a3554c0d0b48177b1413c26e01f695334428020d9df01243fbae3e11cfd17417 done
+#9 DONE 0.0s
+
+#10 [frontend internal] load build context
+#10 transferring context: 23.17kB 0.0s done
+#10 DONE 0.0s
+
+#11 [frontend build 2/6] WORKDIR /app
+#11 CACHED
+
+#12 [frontend build 3/6] COPY package.json package-lock.json ./
+#12 CACHED
+
+#13 [frontend build 4/6] RUN npm ci --no-audit --no-fund
+#13 CACHED
+
+#14 [frontend build 5/6] COPY . .
+#14 DONE 0.0s
+
+#4 [beat internal] load metadata for docker.io/library/python:3.12-slim
+#4 DONE 2.8s
+
+#15 [beat internal] load .dockerignore
+#15 transferring context: 118B done
+#15 DONE 0.0s
+
+#16 [beat 1/6] FROM docker.io/library/python:3.12-slim@sha256:5b8b1421ccb6a525860a77863c049eab5847076cda34e030c75a80c58faf3f3c
+#16 resolve docker.io/library/python:3.12-slim@sha256:5b8b1421ccb6a525860a77863c049eab5847076cda34e030c75a80c58faf3f3c done
+#16 DONE 0.0s
+
+#17 [beat 2/6] WORKDIR /app
+#17 DONE 0.0s
+
+#18 [beat internal] load build context
+#18 transferring context: 145.08kB 0.0s done
+#18 DONE 0.0s
+
+#19 [worker 3/6] COPY requirements.txt /app/requirements.txt
+#19 DONE 0.0s
+
+#20 [backend 4/6] RUN pip install --no-cache-dir -r /app/requirements.txt
+#20 ...
+
+#21 [frontend build 6/6] RUN npm run build
+#21 0.363 
+#21 0.363 > anumati-frontend@2.0.0 build
+#21 0.363 > vite build
+#21 0.363 
+#21 0.562 vite v6.4.5 building for production...
+#21 0.610 transforming...
+#21 1.380 ✓ 62 modules transformed.
+#21 1.473 rendering chunks...
+#21 1.480 computing gzip size...
+#21 1.489 dist/index.html                   0.44 kB │ gzip:  0.31 kB
+#21 1.489 dist/assets/index-2QbUo-O4.css    4.89 kB │ gzip:  1.77 kB
+#21 1.489 dist/assets/index-DYxL7Ajh.js   245.47 kB │ gzip: 75.65 kB
+#21 1.489 ✓ built in 904ms
+#21 DONE 1.5s
+
+#22 [frontend stage-1 2/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#22 CACHED
+
+#23 [frontend stage-1 3/3] COPY --from=build /app/dist /usr/share/nginx/html
+#23 DONE 0.0s
+
+#24 [frontend] exporting to image
+#24 exporting layers 0.0s done
+#24 exporting manifest sha256:8d33afe5c550b365d3def3643fb6cc3529e0d008477358dbb70319d8b6641c08 done
+#24 exporting config sha256:75e32578db7d81a6afc82575a2a8f731c09ae79fc97c1a3ecb38a3270b2ae713 done
+#24 exporting attestation manifest sha256:4bf575bd733bb99370305be59173b7ddeabe5f632722eac15eada46b84609c81 done
+#24 exporting manifest list sha256:7515300618a6f0e3c284221f65bb47cff0deea4df8dc7c07ca13c34c33470611 done
+#24 naming to docker.io/library/anumati-demo-frontend:latest done
+#24 unpacking to docker.io/library/anumati-demo-frontend:latest 0.0s done
+#24 DONE 0.1s
+
+#25 [frontend] resolving provenance for metadata file
+#25 DONE 0.0s
+
+#20 [backend 4/6] RUN pip install --no-cache-dir -r /app/requirements.txt
+#20 2.099 Collecting Django==5.2.18 (from -r /app/requirements.txt (line 1))
+#20 2.578   Downloading django-5.2.18-py3-none-any.whl.metadata (4.1 kB)
+#20 3.012 Collecting djangorestframework==3.18.2 (from -r /app/requirements.txt (line 2))
+#20 3.038   Downloading djangorestframework-3.18.2-py3-none-any.whl.metadata (7.8 kB)
+#20 3.393 Collecting psycopg==3.2.3 (from psycopg[binary]==3.2.3->-r /app/requirements.txt (line 3))
+#20 3.703   Downloading psycopg-3.2.3-py3-none-any.whl.metadata (4.3 kB)
+#20 4.085 Collecting celery==5.4.0 (from -r /app/requirements.txt (line 4))
+#20 4.111   Downloading celery-5.4.0-py3-none-any.whl.metadata (21 kB)
+#20 4.189 Collecting redis==5.2.0 (from -r /app/requirements.txt (line 5))
+#20 4.227   Downloading redis-5.2.0-py3-none-any.whl.metadata (9.1 kB)
+#20 4.284 Collecting pytest==9.0.3 (from -r /app/requirements.txt (line 6))
+#20 4.317   Downloading pytest-9.0.3-py3-none-any.whl.metadata (7.6 kB)
+#20 4.664 Collecting pytest-django==4.14.0 (from -r /app/requirements.txt (line 7))
+#20 4.719   Downloading pytest_django-4.14.0-py3-none-any.whl.metadata (8.1 kB)
+#20 5.121 Collecting coverage==7.6.4 (from -r /app/requirements.txt (line 8))
+#20 5.174   Downloading coverage-7.6.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (8.2 kB)
+#20 5.504 Collecting ruff==0.7.1 (from -r /app/requirements.txt (line 9))
+#20 5.534   Downloading ruff-0.7.1-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (25 kB)
+#20 5.587 Collecting asgiref>=3.8.1 (from Django==5.2.18->-r /app/requirements.txt (line 1))
+#20 5.615   Downloading asgiref-3.13.0-py3-none-any.whl.metadata (12 kB)
+#20 5.917 Collecting sqlparse>=0.3.1 (from Django==5.2.18->-r /app/requirements.txt (line 1))
+#20 5.964   Downloading sqlparse-0.6.0-py3-none-any.whl.metadata (6.0 kB)
+#20 6.036 Collecting typing-extensions>=4.6 (from psycopg==3.2.3->psycopg[binary]==3.2.3->-r /app/requirements.txt (line 3))
+#20 6.062   Downloading typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+#20 6.395 Collecting billiard<5.0,>=4.2.0 (from celery==5.4.0->-r /app/requirements.txt (line 4))
+#20 6.421   Downloading billiard-4.3.1-py3-none-any.whl.metadata (5.0 kB)
+#20 6.779 Collecting kombu<6.0,>=5.3.4 (from celery==5.4.0->-r /app/requirements.txt (line 4))
+#20 6.819   Downloading kombu-5.6.2-py3-none-any.whl.metadata (3.5 kB)
+#20 7.292 Collecting vine<6.0,>=5.1.0 (from celery==5.4.0->-r /app/requirements.txt (line 4))
+#20 7.334   Downloading vine-5.1.0-py3-none-any.whl.metadata (2.7 kB)
+#20 7.417 Collecting click<9.0,>=8.1.2 (from celery==5.4.0->-r /app/requirements.txt (line 4))
+#20 7.471   Downloading click-8.5.0-py3-none-any.whl.metadata (2.6 kB)
+#20 7.910 Collecting click-didyoumean>=0.3.0 (from celery==5.4.0->-r /app/requirements.txt (line 4))
+#20 8.217   Downloading click_didyoumean-0.3.1-py3-none-any.whl.metadata (3.9 kB)
+#20 8.624 Collecting click-repl>=0.2.0 (from celery==5.4.0->-r /app/requirements.txt (line 4))
+#20 8.671   Downloading click_repl-0.4.1-py3-none-any.whl.metadata (3.7 kB)
+#20 9.242 Collecting click-plugins>=1.1.1 (from celery==5.4.0->-r /app/requirements.txt (line 4))
+#20 9.287   Downloading click_plugins-1.1.1.2-py2.py3-none-any.whl.metadata (6.5 kB)
+#20 9.349 Collecting tzdata>=2022.7 (from celery==5.4.0->-r /app/requirements.txt (line 4))
+#20 9.393   Downloading tzdata-2026.5-py2.py3-none-any.whl.metadata (1.4 kB)
+#20 9.424 Collecting python-dateutil>=2.8.2 (from celery==5.4.0->-r /app/requirements.txt (line 4))
+#20 9.455   Downloading python_dateutil-3.0.0-py2.py3-none-any.whl.metadata (8.2 kB)
+#20 9.493 Collecting iniconfig>=1.0.1 (from pytest==9.0.3->-r /app/requirements.txt (line 6))
+#20 9.526   Downloading iniconfig-2.3.1-py3-none-any.whl.metadata (2.8 kB)
+#20 9.570 Collecting packaging>=22 (from pytest==9.0.3->-r /app/requirements.txt (line 6))
+#20 9.875   Downloading packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+#20 9.932 Collecting pluggy<2,>=1.5 (from pytest==9.0.3->-r /app/requirements.txt (line 6))
+#20 9.967   Downloading pluggy-1.7.0-py3-none-any.whl.metadata (5.0 kB)
+#20 10.04 Collecting pygments>=2.7.2 (from pytest==9.0.3->-r /app/requirements.txt (line 6))
+#20 10.08   Downloading pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+#20 10.58 Collecting psycopg-binary==3.2.3 (from psycopg[binary]==3.2.3->-r /app/requirements.txt (line 3))
+#20 10.60   Downloading psycopg_binary-3.2.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (2.8 kB)
+#20 10.66 Collecting prompt_toolkit>=3.0.36 (from click-repl>=0.2.0->celery==5.4.0->-r /app/requirements.txt (line 4))
+#20 10.70   Downloading prompt_toolkit-3.0.53-py3-none-any.whl.metadata (6.4 kB)
+#20 11.01 Collecting amqp<6.0.0,>=5.1.1 (from kombu<6.0,>=5.3.4->celery==5.4.0->-r /app/requirements.txt (line 4))
+#20 11.05   Downloading amqp-5.4.1-py3-none-any.whl.metadata (9.4 kB)
+#20 11.10 Collecting six>=1.6 (from python-dateutil>=2.8.2->celery==5.4.0->-r /app/requirements.txt (line 4))
+#20 11.13   Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+#20 11.18 Collecting wcwidth>=0.1.4 (from prompt_toolkit>=3.0.36->click-repl>=0.2.0->celery==5.4.0->-r /app/requirements.txt (line 4))
+#20 11.21   Downloading wcwidth-0.9.4-cp310-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl.metadata (23 kB)
+#20 11.25 Downloading django-5.2.18-py3-none-any.whl (8.3 MB)
+#20 12.42    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.3/8.3 MB 7.4 MB/s eta 0:00:00
+#20 12.46 Downloading djangorestframework-3.18.2-py3-none-any.whl (903 kB)
+#20 12.54    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 904.0/904.0 kB 11.2 MB/s eta 0:00:00
+#20 12.58 Downloading psycopg-3.2.3-py3-none-any.whl (197 kB)
+#20 12.63 Downloading celery-5.4.0-py3-none-any.whl (425 kB)
+#20 12.70 Downloading redis-5.2.0-py3-none-any.whl (261 kB)
+#20 12.75 Downloading pytest-9.0.3-py3-none-any.whl (375 kB)
+#20 12.81 Downloading pytest_django-4.14.0-py3-none-any.whl (27 kB)
+#20 12.85 Downloading coverage-7.6.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl (240 kB)
+#20 12.90 Downloading ruff-0.7.1-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl (10.7 MB)
+#20 15.42    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.7/10.7 MB 4.1 MB/s eta 0:00:00
+#20 15.46 Downloading psycopg_binary-3.2.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl (4.4 MB)
+#20 16.07    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.4/4.4 MB 7.0 MB/s eta 0:00:00
+#20 16.36 Downloading asgiref-3.13.0-py3-none-any.whl (27 kB)
+#20 16.41 Downloading billiard-4.3.1-py3-none-any.whl (90 kB)
+#20 16.44 Downloading click-8.5.0-py3-none-any.whl (125 kB)
+#20 16.48 Downloading click_didyoumean-0.3.1-py3-none-any.whl (3.6 kB)
+#20 16.52 Downloading click_plugins-1.1.1.2-py2.py3-none-any.whl (11 kB)
+#20 16.55 Downloading click_repl-0.4.1-py3-none-any.whl (14 kB)
+#20 16.58 Downloading iniconfig-2.3.1-py3-none-any.whl (7.6 kB)
+#20 16.61 Downloading kombu-5.6.2-py3-none-any.whl (214 kB)
+#20 16.65 Downloading vine-5.1.0-py3-none-any.whl (9.6 kB)
+#20 16.67 Downloading packaging-26.3-py3-none-any.whl (129 kB)
+#20 16.71 Downloading pluggy-1.7.0-py3-none-any.whl (27 kB)
+#20 16.74 Downloading pygments-2.21.0-py3-none-any.whl (1.3 MB)
+#20 16.83    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.3/1.3 MB 14.1 MB/s eta 0:00:00
+#20 16.86 Downloading python_dateutil-3.0.0-py2.py3-none-any.whl (94 kB)
+#20 16.90 Downloading sqlparse-0.6.0-py3-none-any.whl (50 kB)
+#20 16.93 Downloading typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+#20 16.96 Downloading tzdata-2026.5-py2.py3-none-any.whl (347 kB)
+#20 17.02 Downloading amqp-5.4.1-py3-none-any.whl (51 kB)
+#20 17.04 Downloading prompt_toolkit-3.0.53-py3-none-any.whl (392 kB)
+#20 17.10 Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+#20 17.14 Downloading wcwidth-0.9.4-cp310-abi3-manylinux2014_aarch64.manylinux_2_17_aarch64.whl (789 kB)
+#20 17.19    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 789.0/789.0 kB 14.3 MB/s eta 0:00:00
+#20 17.28 Installing collected packages: wcwidth, vine, tzdata, typing-extensions, sqlparse, six, ruff, redis, pygments, psycopg-binary, pluggy, packaging, iniconfig, coverage, click, billiard, asgiref, python-dateutil, pytest, psycopg, prompt_toolkit, Django, click-plugins, click-didyoumean, amqp, pytest-django, kombu, djangorestframework, click-repl, celery
+#20 21.15 Successfully installed Django-5.2.18 amqp-5.4.1 asgiref-3.13.0 billiard-4.3.1 celery-5.4.0 click-8.5.0 click-didyoumean-0.3.1 click-plugins-1.1.1.2 click-repl-0.4.1 coverage-7.6.4 djangorestframework-3.18.2 iniconfig-2.3.1 kombu-5.6.2 packaging-26.3 pluggy-1.7.0 prompt_toolkit-3.0.53 psycopg-3.2.3 psycopg-binary-3.2.3 pygments-2.21.0 pytest-9.0.3 pytest-django-4.14.0 python-dateutil-3.0.0 redis-5.2.0 ruff-0.7.1 six-1.17.0 sqlparse-0.6.0 typing-extensions-4.16.0 tzdata-2026.5 vine-5.1.0 wcwidth-0.9.4
+#20 21.15 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+#20 21.65 
+#20 21.65 [notice] A new release of pip is available: 25.0.1 -> 26.2.2
+#20 21.65 [notice] To update, run: pip install --upgrade pip
+#20 DONE 22.0s
+
+#26 [backend 5/6] COPY . /app
+#26 DONE 0.1s
+
+#27 [backend 6/6] RUN mkdir -p /var/lib/anumati/private_storage /var/lib/anumati/sealed_audit_exports
+#27 DONE 0.1s
+
+#28 [backend] exporting to image
+#28 exporting layers
+#28 exporting layers 2.9s done
+#28 exporting manifest sha256:14591e5872438e9288570e52deab0d1db1199a17ad391577f8911198c3f07a22 0.0s done
+#28 exporting config sha256:eab38200bdb1a7efa66845e6092df11ec6fa91cc0adc588a8d5efad15e577dcc done
+#28 exporting attestation manifest sha256:681d9e9258b22f2e7b627aa87ac00f4022290f11edd8b9188c30d733b1559036 done
+#28 exporting manifest list sha256:ea0b29a314e7eacc3cce61fb0552b7b3ac6b3ef0df05853e765231304744e6bb 0.0s done
+#28 naming to docker.io/library/anumati-demo-backend:latest done
+#28 unpacking to docker.io/library/anumati-demo-backend:latest
+#28 ...
+
+#29 [beat] exporting to image
+#29 exporting layers 2.9s done
+#29 exporting manifest sha256:8f9d489fca70a40ee40d70729d92f5ebd23103f5cd6637d4bf04fca19969e100 0.0s done
+#29 exporting config sha256:0a9dc28af339a933e87edfc8d95e02fe64b38bd07523a9593ef866e05629f36b done
+#29 exporting attestation manifest sha256:88b4feda6c6e95e6a30e40f43a25573651ec8dd9777680a617067a99d3f0ba70 done
+#29 exporting manifest list sha256:b7addd2f542a19b76009189d5dacacbd914764cc99b56824a1784961433984f5 0.0s done
+#29 naming to docker.io/library/anumati-demo-beat:latest done
+#29 unpacking to docker.io/library/anumati-demo-beat:latest 2.2s done
+#29 DONE 5.2s
+
+#30 [worker] exporting to image
+#30 exporting layers 2.9s done
+#30 exporting manifest sha256:448951d37ee01e338ecbb7b92bd99d614691f5d3f9c694720352ca4f39d4c2c2 0.0s done
+#30 exporting config sha256:3416390f4dac5d272a31b77b25424b115868bdb674e16c7a0b046e21ed3bfb51 done
+#30 exporting attestation manifest sha256:27c8b304c6ace07837e14b4fbdfc25cc1b0715a73f57f0342e9e41793eac3adc done
+#30 exporting manifest list sha256:0c7dca0539d5324c0d3ec5d529ac92e3699375ab562540254e8dd97f2dfe1c0e 0.0s done
+#30 naming to docker.io/library/anumati-demo-worker:latest done
+#30 unpacking to docker.io/library/anumati-demo-worker:latest 2.3s done
+#30 DONE 5.3s
+
+#28 [backend] exporting to image
+#28 unpacking to docker.io/library/anumati-demo-backend:latest 2.3s done
+#28 DONE 5.3s
+
+#31 [worker] resolving provenance for metadata file
+#31 DONE 0.0s
+
+#32 [beat] resolving provenance for metadata file
+#32 DONE 0.0s
+
+#33 [backend] resolving provenance for metadata file
+#33 DONE 0.0s
+ Image anumati-demo-backend Built 
+ Image anumati-demo-frontend Built 
+ Image anumati-demo-worker Built 
+ Image anumati-demo-beat Built 
+ Container anumati-demo-db-1 Running 
+ Container anumati-demo-redis-1 Running 
+ Container anumati-demo-backend-1 Recreate 
+ Container anumati-demo-backend-1 Recreated 
+ Container anumati-demo-frontend-1 Recreate 
+ Container anumati-demo-beat-1 Recreate 
+ Container anumati-demo-worker-1 Recreate 
+ Container anumati-demo-frontend-1 Recreated 
+ Container anumati-demo-beat-1 Recreated 
+ Container anumati-demo-worker-1 Recreated 
+ Container anumati-demo-db-1 Waiting 
+ Container anumati-demo-redis-1 Waiting 
+ Container anumati-demo-db-1 Healthy 
+ Container anumati-demo-redis-1 Healthy 
+ Container anumati-demo-backend-1 Starting 
+ Container anumati-demo-backend-1 Started 
+ Container anumati-demo-backend-1 Waiting 
+ Container anumati-demo-backend-1 Waiting 
+ Container anumati-demo-backend-1 Waiting 
+ Container anumati-demo-backend-1 Healthy 
+ Container anumati-demo-backend-1 Healthy 
+ Container anumati-demo-worker-1 Starting 
+ Container anumati-demo-frontend-1 Starting 
+ Container anumati-demo-backend-1 Healthy 
+ Container anumati-demo-beat-1 Starting 
+ Container anumati-demo-worker-1 Started 
+ Container anumati-demo-frontend-1 Started 
+ Container anumati-demo-beat-1 Started 

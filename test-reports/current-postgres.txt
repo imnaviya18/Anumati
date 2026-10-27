@@ -1,0 +1,27 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.14, pytest-9.0.3, pluggy-1.7.0
+django: version: 5.2.18, settings: config.settings.dev (from ini)
+rootdir: /Users/satvikdixit/Documents/VS CODE/Projects/Anumati/anumati/backend
+configfile: pytest.ini
+plugins: django-4.14.0, platformdirs-4.13.5
+collected 47 items
+
+backend/apps/access/tests/test_stage1_scope_and_transitions.py ......    [ 12%]
+backend/apps/adapters/tests/test_adapters.py ..                          [ 17%]
+backend/apps/cases/tests/test_stage4_approval_and_evc.py .               [ 19%]
+backend/apps/common/tests/test_common.py ..                              [ 23%]
+backend/apps/compliance/tests/test_stage5_compliance_validity_deadlines.py . [ 25%]
+..                                                                       [ 29%]
+backend/apps/decisions/tests/test_stage2_atomic_and_concurrency.py ..    [ 34%]
+backend/apps/outbox/tests/test_stage3_outbox_and_quarantine.py ..        [ 38%]
+backend/apps/policy/tests/test_stage6_policy_comms_reports_api.py ...    [ 44%]
+backend/tests/test_api_regressions.py ............                       [ 70%]
+backend/tests/test_concurrency.py .                                      [ 72%]
+backend/tests/test_fault_recovery.py ..                                  [ 76%]
+backend/tests/test_isolation.py .                                        [ 78%]
+backend/tests/test_query_performance.py .                                [ 80%]
+backend/tests/test_stage0_boot.py ..                                     [ 85%]
+backend/tests/test_workspace_completion.py ......                        [ 97%]
+backend/apps/decisions/tests/test_stage2_atomic_and_concurrency.py .     [100%]
+
+============================= 47 passed in 39.66s ==============================

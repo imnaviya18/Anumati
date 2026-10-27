@@ -1,0 +1,24 @@
+backend/apps/access/api/views.py:13:32: F401 [*] `apps.access.models.CaseAssignment` imported but unused
+backend/apps/access/api/views.py:14:55: F401 [*] `apps.access.services.create_case_assignment` imported but unused
+backend/apps/access/api/views.py:15:31: F401 [*] `apps.cases.models.ApplicationCase` imported but unused
+backend/apps/access/api/views.py:15:48: F401 [*] `apps.cases.models.StageInstance` imported but unused
+backend/apps/cases/services.py:23:36: F401 [*] `apps.common.middleware.get_correlation_id` imported but unused
+backend/apps/cases/services.py:26:32: F401 [*] `apps.outbox.models.OutboxEvent` imported but unused
+backend/apps/cases/services.py:26:45: F401 [*] `apps.outbox.models.OutboxState` imported but unused
+backend/apps/cases/tests/test_stage4_approval_and_evc.py:11:58: F401 [*] `apps.cases.models.StageStatus` imported but unused
+backend/apps/compliance/services.py:23:36: F401 [*] `apps.escalation.models.EscalationState` imported but unused
+backend/apps/compliance/services.py:23:53: F401 [*] `apps.escalation.models.EscalationTask` imported but unused
+backend/apps/documents/services.py:20:5: F401 [*] `apps.documents.models.DocumentValidityRecord` imported but unused
+backend/apps/documents/services.py:25:5: F401 [*] `apps.documents.models.ValidityMonitorState` imported but unused
+backend/apps/evc/api/views.py:39:22: E701 Multiple statements on one line (colon)
+backend/apps/evc/api/views.py:41:62: E702 Multiple statements on one line (semicolon)
+backend/apps/evc/api/views.py:46:55: E701 Multiple statements on one line (colon)
+backend/apps/evc/api/views.py:56:13: E701 Multiple statements on one line (colon)
+backend/apps/evc/api/views.py:57:32: E702 Multiple statements on one line (semicolon)
+backend/tests/test_api_regressions.py:24:34: E702 Multiple statements on one line (semicolon)
+backend/tests/test_api_regressions.py:49:31: E702 Multiple statements on one line (semicolon)
+backend/tests/test_api_regressions.py:70:41: E702 Multiple statements on one line (semicolon)
+backend/tests/test_api_regressions.py:74:59: E702 Multiple statements on one line (semicolon)
+backend/tests/test_api_regressions.py:76:82: E702 Multiple statements on one line (semicolon)
+Found 22 errors.
+[*] 12 fixable with the `--fix` option.

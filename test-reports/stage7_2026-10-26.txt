@@ -1,0 +1,116 @@
+ANUMATI v2 — Stage 7 Gate Verification Report (Sheet 07 Q1-Q5)
+Timestamp: 2026-10-26T18:22:03Z
+
+=== 1. Migrations Check ===
+No changes detected
+
+=== 2. Stage 0..7 Full Backend Verification Suite (including Q1, Q2, Q3, Q4) ===
+Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+Found 25 test(s).
+Operations to perform:
+  Synchronize unmigrated apps: messages, rest_framework, staticfiles
+  Apply all migrations: access, audit, auth, cases, communications, compliance, contenttypes, deadlines, decisions, documents, escalation, evc, notifications, organisation, outbox, policy, sessions
+Synchronizing apps without migrations:
+  Creating tables...
+    Running deferred SQL...
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying organisation.0001_initial... OK
+  Applying policy.0001_initial... OK
+  Applying cases.0001_initial... OK
+  Applying access.0001_initial... OK
+  Applying audit.0001_initial... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying auth.0012_alter_user_first_name_max_length... OK
+  Applying decisions.0001_initial... OK
+  Applying communications.0001_initial... OK
+  Applying deadlines.0001_initial... OK
+  Applying documents.0001_initial... OK
+  Applying compliance.0001_initial... OK
+  Applying escalation.0001_initial... OK
+  Applying evc.0001_initial... OK
+  Applying notifications.0001_initial... OK
+  Applying outbox.0001_initial... OK
+  Applying sessions.0001_initial...test_committee_and_scoped_obligation_document_queries (apps.access.tests.test_stage1_scope_and_transitions.Stage1OrganisationAccessAndTransitionTests.test_committee_and_scoped_obligation_document_queries)
+Verify Committee membership validity and scoped obligation/document selectors. ... ok
+test_cross_institution_and_cross_region_isolation (apps.access.tests.test_stage1_scope_and_transitions.Stage1OrganisationAccessAndTransitionTests.test_cross_institution_and_cross_region_isolation)
+Prove cross-institution, cross-region, and unassigned reviewer access is denied (Sheet 07 Q2). ... ok
+test_expired_role_or_case_assignment_is_denied (apps.access.tests.test_stage1_scope_and_transitions.Stage1OrganisationAccessAndTransitionTests.test_expired_role_or_case_assignment_is_denied)
+Prove validity-period expiration revokes access automatically (Sheet 07 N1). ... ok
+test_permitted_vs_forbidden_transitions_and_prescribed_stages (apps.access.tests.test_stage1_scope_and_transitions.Stage1OrganisationAccessAndTransitionTests.test_permitted_vs_forbidden_transitions_and_prescribed_stages)
+Prove permitted vs forbidden transitions and no automatic approval / skipping stages (Sheet 02, 06 K5, 07 Q1). ... ok
+test_policy_route_selection_never_defaults_to_approval (apps.access.tests.test_stage1_scope_and_transitions.Stage1OrganisationAccessAndTransitionTests.test_policy_route_selection_never_defaults_to_approval)
+Prove missing or conflicting route rules never default to approval (Sheet 02 A2, Sheet 07 P3). ... ok
+test_technical_admin_holds_no_regulatory_authority (apps.access.tests.test_stage1_scope_and_transitions.Stage1OrganisationAccessAndTransitionTests.test_technical_admin_holds_no_regulatory_authority)
+Prove TECHNICAL_ADMIN cannot hold delegated regulatory powers or execute stages/decisions (Sheet 07 P5). ... ok
+test_end_to_end_intake_deficiency_rescrutiny_evc_shc_disposition_and_appeal (apps.cases.tests.test_stage4_approval_and_evc.Stage4ApprovalWorkflowAndEvcTests.test_end_to_end_intake_deficiency_rescrutiny_evc_shc_disposition_and_appeal)
+Exercise complete Sheet 02 A1-C4 & Sheet 04 G1-G5 flow including deficiency cycle, EVC slot contention/reschedule/report, SHC, LoD, and SAC appeal. ... ok
+test_deadline_extension_preserves_history_and_escalation_levels_fire_in_order_and_stop_on_closure (apps.compliance.tests.test_stage5_compliance_validity_deadlines.Stage5ComplianceValidityDeadlinesEscalationTests.test_deadline_extension_preserves_history_and_escalation_levels_fire_in_order_and_stop_on_closure)
+Prove Sheet 03 D2-D4, Sheet 04 H1-H5, Sheet 06 M6: deadline extension preserves history; 24h scheduler catch-up fires escalations in order; sent alert != closure; explicit closure stops further escalations. ... ok
+test_document_validity_new_upload_never_replaces_accepted_until_human_acceptance (apps.compliance.tests.test_stage5_compliance_validity_deadlines.Stage5ComplianceValidityDeadlinesEscalationTests.test_document_validity_new_upload_never_replaces_accepted_until_human_acceptance)
+Prove Sheet 03 F1-F5 & PS Section E: a new renewal upload never replaces accepted validity until accepted by a human reviewer. ... ok
+test_obligations_separate_submission_and_verification_lateness_facts (apps.compliance.tests.test_stage5_compliance_validity_deadlines.Stage5ComplianceValidityDeadlinesEscalationTests.test_obligations_separate_submission_and_verification_lateness_facts)
+Prove submission, verification, and lateness are stored as separate facts, and timely submission != timely verification (Sheet 03 E2-E4, Sheet 07 N2). ... ok
+test_append_only_audit_and_sealed_export (apps.decisions.tests.test_stage2_atomic_and_concurrency.Stage2AtomicDecisionAndAuditTests.test_append_only_audit_and_sealed_export)
+Prove AuditEvent rejects UPDATE and DELETE at both ORM and raw SQL database trigger levels (Sheet 07 N5). ... ok
+test_guarded_stage_transition_and_atomic_decision_with_idempotency (apps.decisions.tests.test_stage2_atomic_and_concurrency.Stage2AtomicDecisionAndAuditTests.test_guarded_stage_transition_and_atomic_decision_with_idempotency)
+Verify stage transitions, version locking, idempotency replay/conflict, and atomic decision commit (Sheet 06 K1-L3). ... ok
+test_outbox_leases_retries_failed_owner_replay_and_reconciliation (apps.outbox.tests.test_stage3_outbox_and_quarantine.Stage3OutboxRecoveryAndQuarantineTests.test_outbox_leases_retries_failed_owner_replay_and_reconciliation)
+Verify Sheet 06 L4, M1-M6: broker failure retains intent, transient failure retries with backoff+jitter, exhausted enters failed queue, operator replay is audited, ambiguous outcome reconciled. ... ok
+test_quarantine_pipeline_scan_outage_and_download_isolation (apps.outbox.tests.test_stage3_outbox_and_quarantine.Stage3OutboxRecoveryAndQuarantineTests.test_quarantine_pipeline_scan_outage_and_download_isolation)
+Verify Sheet 03 E1-E3, Sheet 07 P2, Q2: quarantine upload, scanner outage retention, dirty file rejection, short-lived download grant, and separate human acceptance. ... ok
+test_electronic_case_summary_and_standardised_communications (apps.policy.tests.test_stage6_policy_comms_reports_api.Stage6PolicyCommsReportsApiTests.test_electronic_case_summary_and_standardised_communications)
+Prove PS-A.5 & PS-A.6: deterministic case summary never mutates case state/version; communications queue to outbox. ... ok
+test_policy_lifecycle_validation_dry_run_activation_and_explicit_migration (apps.policy.tests.test_stage6_policy_comms_reports_api.Stage6PolicyCommsReportsApiTests.test_policy_lifecycle_validation_dry_run_activation_and_explicit_migration)
+Prove Sheet 04 J1-J3 & Sheet 07 P3-P4: draft -> validate -> dry-run -> activate -> explicit migration. ... ok
+test_role_dashboards_six_statutory_reports_and_rest_apis (apps.policy.tests.test_stage6_policy_comms_reports_api.Stage6PolicyCommsReportsApiTests.test_role_dashboards_six_statutory_reports_and_rest_apis)
+Prove PS-B & PS-F.3: role dashboards with data_as_of, exact 6 statutory reports + CSV export, and scoped REST APIs. ... ok
+test_q1_forbidden_transitions_stale_versions_idempotency_and_slot_contention (tests.test_concurrency.Sheet07Q1StateAndConcurrencyTests.test_q1_forbidden_transitions_stale_versions_idempotency_and_slot_contention)
+Prove Q1 invariants across transitions, optimistic version locking, idempotency keys, and atomic EVC slot reservations. ... ok
+test_q3_backup_and_restore_database_files_and_audit_chain_consistency (tests.test_fault_recovery.Sheet07Q3FaultAndRestoreTests.test_q3_backup_and_restore_database_files_and_audit_chain_consistency)
+Prove Sheet 07 Q3 & Q4: backup and restore of database + private files + sealed audit bundle preserves case state, document SHA-256, and audit hash chain. ... ok
+test_q3_worker_kill_broker_loss_duplicate_callbacks_24h_catchup_and_deadline_extension_race (tests.test_fault_recovery.Sheet07Q3FaultAndRestoreTests.test_q3_worker_kill_broker_loss_duplicate_callbacks_24h_catchup_and_deadline_extension_race)
+Prove Sheet 07 Q3 resilience across worker crash, lost broker queue, duplicate callbacks, 24h scheduler downtime, and deadline extension while task waits. ... ok
+test_q2_isolation_across_detail_list_search_export_download_and_roles (tests.test_isolation.Sheet07Q2IsolationTests.test_q2_isolation_across_detail_list_search_export_download_and_roles)
+Prove Sheet 07 Q2 isolation across all surfaces. ... ok
+test_zero_n_plus_1_on_lists_and_reports_plus_pagination_and_telemetry (tests.test_query_performance.Sheet07Q4QueryPerformanceAndTelemetryTests.test_zero_n_plus_1_on_lists_and_reports_plus_pagination_and_telemetry)
+Prove bounded query count (zero N+1) across 12 institutions/cases/obligations, pagination, and operational metrics. ... ok
+test_all_domain_apps_registered_and_layered (tests.test_stage0_boot.Stage0BootTests.test_all_domain_apps_registered_and_layered)
+Verify every required domain app is installed and has models, services, selectors, api, tests, migrations. ... ok
+test_database_migrations_clean_boot (tests.test_stage0_boot.Stage0BootTests.test_database_migrations_clean_boot)
+Verify migrations apply cleanly and database queries execute. ... ok
+test_100_concurrent_final_decision_commands (apps.decisions.tests.test_stage2_atomic_and_concurrency.Stage2Concurrency100DecisionsTest.test_100_concurrent_final_decision_commands) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 31.782s
+
+OK
+Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
+ OK
+System check identified no issues (0 silenced).
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.
+Bootstrapped roles and initial technical admin 'tech_admin'.

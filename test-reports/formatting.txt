@@ -1,0 +1,26 @@
+frontend/src/api/client.js 32ms (unchanged)
+frontend/src/auth/AuthContext.jsx 8ms (unchanged)
+frontend/src/components/AdministrationDirectory.jsx 12ms (unchanged)
+frontend/src/components/AppLayout.jsx 5ms (unchanged)
+frontend/src/components/CaseHistory.jsx 3ms
+frontend/src/components/CaseWorkbench.jsx 12ms
+frontend/src/components/ComplianceActions.jsx 7ms (unchanged)
+frontend/src/components/EvcWorkspace.jsx 5ms (unchanged)
+frontend/src/components/EvidenceWorkspace.jsx 9ms (unchanged)
+frontend/src/components/Notifications.jsx 3ms (unchanged)
+frontend/src/components/OperationalActions.jsx 4ms
+frontend/src/hooks/usePolling.js 2ms (unchanged)
+frontend/src/main.jsx 1ms (unchanged)
+frontend/src/pages/admin/AdminWorkspacePage.jsx 3ms (unchanged)
+frontend/src/pages/institution/InstitutionWorkspacePage.jsx 5ms (unchanged)
+frontend/src/pages/LoginPage.jsx 2ms (unchanged)
+frontend/src/pages/officer/OfficerWorkspacePage.jsx 0ms
+frontend/src/pages/oversight/OversightWorkspacePage.jsx 3ms (unchanged)
+frontend/src/pages/policy/PolicyWorkspacePage.jsx 3ms (unchanged)
+frontend/src/routes/index.jsx 1ms (unchanged)
+frontend/src/routes/ProtectedRoute.jsx 1ms (unchanged)
+frontend/src/styles/main.css 25ms (unchanged)
+frontend/src/tests/integration.test.jsx 5ms (unchanged)
+frontend/src/tests/setup.js 2ms (unchanged)
+frontend/src/tests/stage0_shell.test.jsx 1ms (unchanged)
+frontend/src/tests/stage6_workspaces.test.jsx 3ms (unchanged)

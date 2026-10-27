@@ -1,0 +1,73 @@
+# Isolated local stack. Use: docker compose -p anumati-demo -f docker-compose.demo.yml up --build -d
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: anumati_demo
+      POSTGRES_USER: anumati_demo
+      POSTGRES_PASSWORD: local-demo-database-only
+    volumes: [demo_postgres:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U anumati_demo -d anumati_demo"]
+      interval: 3s
+      retries: 20
+  redis:
+    image: redis:7-alpine
+    command: [redis-server, --appendonly, 'yes', --maxmemory-policy, noeviction]
+    volumes: [demo_redis:/data]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 3s
+      retries: 20
+  backend:
+    build: ./backend
+    environment: &environment
+      DJANGO_SETTINGS_MODULE: config.settings.dev
+      DJANGO_SECRET_KEY: local-demonstration-only-never-production-secret
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,backend
+      POSTGRES_DB: anumati_demo
+      POSTGRES_USER: anumati_demo
+      POSTGRES_PASSWORD: local-demo-database-only
+      POSTGRES_HOST: db
+      CELERY_BROKER_URL: redis://redis:6379/0
+      ALLOW_SYNTHETIC_SEED: 'true'
+      ALLOW_DEMONSTRATION_POLICIES: 'true'
+      DEMO_PASSWORD: DemoOnly-2026-Local!
+      APH_DRAFT_PATH: /reference/aph_2024_2027_draft.json
+      FRONTEND_ORIGIN: http://localhost:15173
+      PRIVATE_STORAGE_ROOT: /var/lib/anumati/private_storage
+      SEALED_AUDIT_EXPORT_ROOT: /var/lib/anumati/sealed_audit_exports
+    command: sh -c 'python manage.py migrate --noinput && python manage.py seed_demo && python manage.py runserver 0.0.0.0:8000 --noreload'
+    volumes: &volumes
+      - demo_files:/var/lib/anumati
+      - ./docs/policy/aph_2024_2027_draft.json:/reference/aph_2024_2027_draft.json:ro
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health/')"]
+      interval: 5s
+      retries: 30
+    depends_on:
+      db: {condition: service_healthy}
+      redis: {condition: service_healthy}
+  worker:
+    build: ./backend
+    environment: *environment
+    volumes: *volumes
+    command: celery -A config worker -l info --concurrency=2 -Q default,urgent_alerts,long_tasks
+    depends_on:
+      backend: {condition: service_healthy}
+  beat:
+    build: ./backend
+    environment: *environment
+    volumes: *volumes
+    command: celery -A config beat -l info --schedule=/var/lib/anumati/celerybeat-schedule
+    depends_on:
+      backend: {condition: service_healthy}
+  frontend:
+    build: ./frontend
+    ports: ['127.0.0.1:15173:80']
+    depends_on:
+      backend: {condition: service_healthy}
+volumes:
+  demo_postgres:
+  demo_redis:
+  demo_files:

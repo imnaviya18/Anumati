@@ -1,0 +1,164 @@
+{
+  "policy_code": "APH-2024-2027-RESEARCH-DRAFT",
+  "version_number": 1,
+  "academic_cycle": "2026-27",
+  "is_demonstration": false,
+  "calendar_version": "PENDING-2026-27-VALIDATION",
+  "provenance": {
+    "sources": [
+      {
+        "document": "2025031399.pdf",
+        "title": "AICTE Approval Process Handbook 2024\u20132027",
+        "sections": [
+          "1.8",
+          "1.9",
+          "1.10",
+          "1.11",
+          "2.25"
+        ]
+      }
+    ],
+    "pending_validation": [
+      "2026\u201327 addendum",
+      "Applicable amendments",
+      "Annual academic calendar",
+      "Internal administrative procedures",
+      "Category-specific routes and exceptions",
+      "Delegated committee powers and approval owner"
+    ],
+    "owner_approval_reference": null,
+    "rule_register": {
+      "route_rules.0": {
+        "source": "APH 2024\u20132027, 1.8\u20131.11; mapping requires owner validation",
+        "effective_from": null,
+        "effective_until": null,
+        "version": 1,
+        "approving_authority": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "deadline_triggers.STAGE": {
+        "source": "APH 2024\u20132027, 1.8\u20131.11; mapping requires owner validation",
+        "effective_from": null,
+        "effective_until": null,
+        "version": 1,
+        "approving_authority": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "document_requirements.NEW_INSTITUTION": {
+        "source": "APH 2024\u20132027, 1.8\u20131.11; mapping requires owner validation",
+        "effective_from": null,
+        "effective_until": null,
+        "version": 1,
+        "approving_authority": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "committee_permissions.SCRUTINY": {
+        "source": "APH 2024\u20132027, 1.8\u20131.11; mapping requires owner validation",
+        "effective_from": null,
+        "effective_until": null,
+        "version": 1,
+        "approving_authority": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "committee_permissions.EVC": {
+        "source": "APH 2024\u20132027, 1.8\u20131.11; mapping requires owner validation",
+        "effective_from": null,
+        "effective_until": null,
+        "version": 1,
+        "approving_authority": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "exception_rules.missing_route": {
+        "source": "APH 2024\u20132027, 1.8\u20131.11; mapping requires owner validation",
+        "effective_from": null,
+        "effective_until": null,
+        "version": 1,
+        "approving_authority": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "exception_rules.ambiguous_route": {
+        "source": "APH 2024\u20132027, 1.8\u20131.11; mapping requires owner validation",
+        "effective_from": null,
+        "effective_until": null,
+        "version": 1,
+        "approving_authority": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "exception_rules.expired_document": {
+        "source": "APH 2024\u20132027, 1.8\u20131.11; mapping requires owner validation",
+        "effective_from": null,
+        "effective_until": null,
+        "version": 1,
+        "approving_authority": null,
+        "status": "PENDING_VALIDATION"
+      },
+      "exception_rules.appeal": {
+        "source": "APH 2024\u20132027, 1.8\u20131.11; mapping requires owner validation",
+        "effective_from": null,
+        "effective_until": null,
+        "version": 1,
+        "approving_authority": null,
+        "status": "PENDING_VALIDATION"
+      }
+    }
+  },
+  "route_rules": [
+    {
+      "route_code": "DRAFT_NEW_INSTITUTION",
+      "conditions": {
+        "application_category": "NEW_INSTITUTION"
+      },
+      "stages": [
+        "SCRUTINY",
+        "EVC"
+      ],
+      "source": "APH 2024\u20132027 clauses 1.8\u20131.10",
+      "validation_status": "PENDING_AUTHORITY_VALIDATION"
+    }
+  ],
+  "stage_timelines": {},
+  "evc_rules": {},
+  "undertaking_rules": [],
+  "document_validity_rules": {},
+  "escalation_hierarchies": {},
+  "calendar_holidays": [],
+  "deadline_triggers": {
+    "STAGE": {
+      "anchor": "stage_started_at",
+      "day_count": "calendar",
+      "validation_status": "PENDING_CALENDAR_VALIDATION"
+    }
+  },
+  "document_requirements": {
+    "NEW_INSTITUTION": [
+      {
+        "document_type": "ANNEXURE_1_EVIDENCE",
+        "source": "APH 1.8 and Annexure 1",
+        "validation_status": "PENDING_CATEGORY_MAPPING"
+      }
+    ]
+  },
+  "committee_permissions": {
+    "SCRUTINY": [
+      "SCRUTINY_MEMBER"
+    ],
+    "EVC": [
+      "EVC_MEMBER"
+    ]
+  },
+  "exception_rules": {
+    "missing_route": "POLICY_REVIEW_REQUIRED",
+    "ambiguous_route": "POLICY_REVIEW_REQUIRED",
+    "expired_document": "HUMAN_REVIEW_REQUIRED",
+    "appeal": "PENDING_APH_1_11_VALIDATION"
+  },
+  "regression_cases": [
+    {
+      "name": "Draft new institution route, pending owner review",
+      "application_category": "NEW_INSTITUTION",
+      "institution_category": "PRIVATE_SELF_FINANCING",
+      "is_new_institution": true,
+      "expected_route_code": "DRAFT_NEW_INSTITUTION"
+    }
+  ]
+}

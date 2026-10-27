@@ -1,0 +1,13 @@
+
+> anumati-frontend@2.0.0 test
+> vitest run
+
+
+ RUN  v5.0.5 /Users/satvikdixit/Documents/VS CODE/Projects/Anumati/anumati/frontend
+
+
+ Test Files  4 passed (4)
+      Tests  15 passed (15)
+   Start at  06:56:54
+   Duration  1.10s (environment 51%, tests 19%, setup 17%, transform 8%, import 4%, worker 1%)
+

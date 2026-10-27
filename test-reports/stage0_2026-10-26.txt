@@ -1,0 +1,14 @@
+ANUMATI v2 — Stage 0 Gate Verification Report
+Timestamp: 2026-10-26T17:15:31Z
+
+1. Python Syntax & Module Structure Check:
+PASS: Parsed 187 Python files with 0 syntax errors.
+PASS: All 19 backend domain apps contain models.py, services.py, selectors.py, api/, tests/, migrations/.
+
+2. Backup & Restore Script Verification (Dry-Run):
+Creating ANUMATI v2 backup in /tmp/anumati_stage0_backup/backup_20261026T171532Z ...
+Offline/local backup mode: archiving local storage and database snapshot...
+Backup complete: /tmp/anumati_stage0_backup/backup_20261026T171532Z
+Verifying backup integrity against manifest.sha256...
+storage.tar.gz: OK
+Restore verified and completed from /tmp/anumati_stage0_backup/backup_20261026T171532Z

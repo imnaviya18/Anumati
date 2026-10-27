@@ -1,0 +1,114 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-anumati}
+      POSTGRES_USER: ${POSTGRES_USER:-anumati_app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-anumati_local_pass}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-anumati_app} -d ${POSTGRES_DB:-anumati}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory-policy", "noeviction"]
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      POSTGRES_HOST: db
+      REDIS_URL: redis://redis:6379/0
+      CELERY_BROKER_URL: redis://redis:6379/0
+      PRIVATE_STORAGE_ROOT: /var/lib/anumati/private_storage
+      SEALED_AUDIT_EXPORT_ROOT: /var/lib/anumati/sealed_audit_exports
+    command: >
+      sh -c "python manage.py migrate --noinput &&
+             python manage.py bootstrap_anumati &&
+             python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./backend:/app
+      - private_storage:/var/lib/anumati/private_storage
+      - sealed_audit_exports:/var/lib/anumati/sealed_audit_exports
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      POSTGRES_HOST: db
+      REDIS_URL: redis://redis:6379/0
+      CELERY_BROKER_URL: redis://redis:6379/0
+      PRIVATE_STORAGE_ROOT: /var/lib/anumati/private_storage
+      SEALED_AUDIT_EXPORT_ROOT: /var/lib/anumati/sealed_audit_exports
+    command: celery -A config worker -l info -Q default,urgent_alerts,long_tasks
+    volumes:
+      - ./backend:/app
+      - private_storage:/var/lib/anumati/private_storage
+      - sealed_audit_exports:/var/lib/anumati/sealed_audit_exports
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  beat:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      POSTGRES_HOST: db
+      REDIS_URL: redis://redis:6379/0
+      CELERY_BROKER_URL: redis://redis:6379/0
+    command: celery -A config beat -l info
+    volumes:
+      - ./backend:/app
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  redis_data:
+  private_storage:
+  sealed_audit_exports:

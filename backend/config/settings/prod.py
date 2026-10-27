@@ -1,0 +1,11 @@
+"""Production settings for ANUMATI v2 (Sheet 05, Sheet 07 P1, P5)."""
+from .base import *  # noqa: F403
+
+DEBUG = False
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = "DENY"
+
+ALLOW_DEMONSTRATION_POLICIES = False

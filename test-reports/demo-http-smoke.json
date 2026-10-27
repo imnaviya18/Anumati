@@ -1,0 +1,19 @@
+{
+  "result": "PASS",
+  "case_number": "AICTE-2026-27-2FC58150",
+  "checks": [
+    "session login + CSRF",
+    "synthetic intake",
+    "reviewer assignment",
+    "real Celery quarantine scan",
+    "human evidence review",
+    "authorised download",
+    "stage transition",
+    "decision commit and identical replay",
+    "continuing obligation submission and verification",
+    "scoped CSV export",
+    "audit history",
+    "rendered case summary",
+    "authoritative APH draft remains blocked"
+  ]
+}

@@ -1,0 +1,11 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.13.14, pytest-9.0.3, pluggy-1.7.0
+django: version: 5.2.18, settings: config.settings.dev (from ini)
+rootdir: /Users/satvikdixit/Documents/VS CODE/Projects/Anumati/anumati/backend
+configfile: pytest.ini
+plugins: django-4.14.0, platformdirs-4.13.5
+collected 5 items
+
+backend/tests/test_workspace_completion.py .....                         [100%]
+
+============================== 5 passed in 2.12s ===============================
