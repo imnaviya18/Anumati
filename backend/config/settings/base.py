@@ -123,7 +123,16 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SESSION_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SAMESITE = "Lax"
 CSRF_COOKIE_SAMESITE = "Lax"
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get(
+        "DJANGO_CSRF_TRUSTED_ORIGINS",
+        "http://localhost:5173,http://127.0.0.1:5173,http://localhost:15173,http://127.0.0.1:15173",
+    ).split(",")
+    if origin.strip()
+]
 DATA_UPLOAD_MAX_MEMORY_SIZE = int(os.environ.get("MAX_UPLOAD_SIZE_BYTES", "26214400"))
+
 
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "apps.common.exceptions.api_exception_handler",
