@@ -10,16 +10,25 @@ export function ComplianceActions({ institution = false, caseRecord = null }) {
         `/api/v1/documents/${caseRecord ? `?case_id=${caseRecord.id}` : ""}`,
       ),
     ]);
+    const valList = Array.isArray(validity)
+      ? validity
+      : validity?.results || [];
+    const obligList = Array.isArray(obligations)
+      ? obligations
+      : obligations?.results || [];
+    const docList = Array.isArray(documents)
+      ? documents
+      : documents?.results || [];
     return {
-      documents,
+      documents: docList,
       validity: caseRecord
-        ? validity.filter(
+        ? valList.filter(
             (v) => v.institution_code === caseRecord.institution_code,
           )
-        : validity,
+        : valList,
       obligations: caseRecord
-        ? obligations.filter((o) => o.case_number === caseRecord.case_number)
-        : obligations,
+        ? obligList.filter((o) => o.case_number === caseRecord.case_number)
+        : obligList,
     };
   }, [caseRecord]);
   const { data, error, refresh } = usePolling(fetchCompliance);

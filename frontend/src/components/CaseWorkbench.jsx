@@ -159,7 +159,7 @@ export function CaseWorkbench({
             {selected.status} · Version {selected.version}
           </p>
           <ol>
-            {selected.stage_instances.map((s) => (
+            {(selected.stage_instances || []).map((s) => (
               <li key={s.id}>
                 {s.stage_type} · {s.status} · {s.completion_reason}
                 {s.findings?.length > 0 && (
