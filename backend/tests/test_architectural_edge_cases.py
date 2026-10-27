@@ -173,6 +173,39 @@ class ArchitecturalEdgeCaseTests(TestCase):
                 source_id="UNIQUE-SRC-1",
             )
 
+    def test_regional_officer_intake_transition_permitted(self):
+        """Regional Officers may import applications for their region without a TransitionViolationError (Sheet 02 A1, Sheet 07 Q1)."""
+        case = submit_or_import_application(
+            actor=self.ro_user,
+            institution=self.inst,
+            academic_cycle="2026-27",
+            application_category="EOA",
+            source_id="RO-IMPORT-1",
+        )
+        self.assertIsNotNone(case.id)
+        self.assertIsNotNone(case.submitted_at)
+        self.assertNotEqual(case.status, CaseStatus.DRAFT)
+
+    # -------------------------------------------------------------------------
+    # 1b. Private storage path containment (Sheet 01 Block 11, Sheet 07 P2)
+    # -------------------------------------------------------------------------
+    def test_storage_path_rejects_traversal_and_sibling_prefix_directories(self):
+        """Keys must stay inside the storage root, including sibling dirs that merely share the root's name as a prefix."""
+        from pathlib import Path
+
+        with tempfile.TemporaryDirectory() as parent:
+            root = Path(parent) / "private"
+            root.mkdir()
+            with override_settings(PRIVATE_STORAGE_ROOT=str(root)):
+                from apps.documents.services import _storage_path_for_object_key
+
+                inside = _storage_path_for_object_key("documents/a.pdf")
+                self.assertTrue(inside.is_relative_to(root.resolve()))
+                with self.assertRaises(PermissionDenied):
+                    _storage_path_for_object_key("../outside.pdf")
+                with self.assertRaises(PermissionDenied):
+                    _storage_path_for_object_key("../private-evil/stolen.pdf")
+
     # -------------------------------------------------------------------------
     # 2. Guarded Decision Command & Idempotency Edge Cases (Sheet 06 K1-K6, L1-L3)
     # -------------------------------------------------------------------------

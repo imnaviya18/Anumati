@@ -36,7 +36,9 @@ ALLOWED_FILE_SIGNATURES: dict[str, tuple[tuple[str, ...], bytes]] = {
 def _storage_path_for_object_key(object_key: str) -> Path:
     root = Path(settings.PRIVATE_STORAGE_ROOT).resolve()
     target = (root / object_key).resolve()
-    if not str(target).startswith(str(root)):
+    # Path-aware containment: a plain string prefix check also accepts sibling
+    # directories such as "<root>-evil" and is fragile across OS path formats.
+    if not target.is_relative_to(root):
         raise PermissionDenied("Invalid storage object key path traversal rejected.")
     return target
 
