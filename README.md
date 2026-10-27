@@ -16,17 +16,110 @@
 ---
 
 ## 📑 Table of Contents
-1. [Executive Summary](#executive-summary)
-2. [Architectural Overview (Sheets 01–07)](#architectural-overview-sheets-0107)
-3. [Domain Modular-Monolith Structure](#domain-modular-monolith-structure)
-4. [Demo Accounts & Role Access Matrix](#demo-accounts--role-access-matrix)
-5. [Quick Start & Local Deployment](#quick-start--local-deployment)
+1. [About ANUMATI](#-about-anumati)
+   - [Etymology & Meaning](#etymology--meaning)
+   - [Regulatory Context: SIH 26262 & APH 2024–27](#regulatory-context-sih-26262--aph-202427)
+   - [The 5 Critical Challenges in Technical Higher Education Governance](#the-5-critical-challenges-in-technical-higher-education-governance)
+   - [The ANUMATI Paradigm Shift](#the-anumati-paradigm-shift)
+   - [Key Stakeholders & Value Delivered](#key-stakeholders--value-delivered)
+2. [Executive Summary](#executive-summary)
+3. [Architectural Overview (Sheets 01–07)](#architectural-overview-sheets-0107)
+4. [Domain Modular-Monolith Structure](#domain-modular-monolith-structure)
+5. [Demo Accounts & Role Access Matrix](#demo-accounts--role-access-matrix)
+6. [Quick Start & Local Deployment](#quick-start--local-deployment)
    - [Method 1: Docker 1-Click (macOS & Windows)](#method-1-docker-1-click-deployment)
    - [Method 2: Native Setup on macOS](#method-2-native-setup-on-macos)
    - [Method 3: Native Setup on Windows (PowerShell / CMD)](#method-3-native-setup-on-windows)
-6. [Test Verification & Edge Cases](#test-verification--edge-cases)
-7. [Enterprise Architectural Safeguards](#enterprise-architectural-safeguards)
-8. [Documentation Index](#documentation-index)
+7. [Test Verification & Edge Cases](#test-verification--edge-cases)
+8. [Enterprise Architectural Safeguards](#enterprise-architectural-safeguards)
+9. [Documentation Index](#documentation-index)
+
+---
+
+## 🏛 About ANUMATI
+
+### Etymology & Meaning
+
+The name **ANUMATI** originates from the classical Sanskrit word **अनुमति** (*anumati*), signifying **"formal assent," "authoritative sanction," or "official approval."**
+
+In the context of the **All India Council for Technical Education (AICTE)**, *ANUMATI* embodies a modern, transparent, and technology-driven vision: transforming regulatory approval from an opaque, bureaucratic paper chase into a fast, deterministic, rule-based digital sanction where every institution is guaranteed an objective, timely, and tamper-evident decision.
+
+---
+
+### Regulatory Context: SIH 26262 & APH 2024–27
+
+Under the Ministry of Education, Government of India, the **AICTE** regulates over **10,000+ technical institutions** across India encompassing engineering, management, pharmacy, architecture, applied arts, and polytechnics.
+
+Annually, institutions must apply for:
+- **Letter of Approval (LoA):** Establishment of new technical colleges.
+- **Extension of Approval (EoA):** Annual continuation of existing institutions.
+- **Variation of Intake / New Programs / Supernumerary Quotas (OCI/FN/EWS):** Expansions in courses and seat caps.
+- **Closure / Relocation / Restoration:** Structural institutional status changes.
+
+The procedures, timelines, land norms, faculty-to-student ratios, infrastructural requirements, and approval conditions are formally codified in the **AICTE Approval Process Handbook (APH 2024–27)**. **ANUMATI v2** was designed under **Smart India Hackathon (Problem Statement ID: SIH 26262)** as a production-grade automated workflow engine that translates the dense regulatory bylaws of APH into deterministic, executable code.
+
+---
+
+### The 5 Critical Challenges in Technical Higher Education Governance
+
+Before ANUMATI, educational regulatory workflows in India were confronted by five systemic challenges:
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│                        LEGACY APPROVAL CHALLENGES vs ANUMATI                           │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│ 1. Bureaucratic Delays & Discretion   ──► Deterministic Policy-as-Code State Machine   │
+│ 2. Lack of Visibility for Colleges    ──► Real-Time Workspace, Live Timers & SLA Track │
+│ 3. Fraudulent / Expired Evidence      ──► Quarantine Pipeline + Cryptographic Hashes   │
+│ 4. "Post-Approval Amnesia"            ──► Continuous 365-Day Validity & Auto-Escalation│
+│ 5. Audit Vulnerability & Tampering    ──► Sealed, Append-Only Cryptographic Audit Log  │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+1. **Bureaucratic Latency & Discretionary Delays:**
+   Applications often languished for weeks across regional desks, committees, and central bureaus without automated deadlines. Discretionary decisions occasionally produced inconsistent outcomes for institutions with similar compliance profiles.
+2. **Opacity for Institutions:**
+   Colleges had zero granular visibility into which officer or committee their file was pending with, why a deficiency was flagged, or when the Expert Visit Committee (EVC) would conduct its physical inspection.
+3. **Document Vulnerability & Evidentiary Fraud:**
+   Institutions submit hundreds of sensitive statutory documents (Fire Safety NOCs, Land Titles, Structural Stability Certificates, AICTE-approved building plans). Paper handling or unverified file uploads invited counterfeit certificates, broken links, or altered records.
+4. **"Post-Approval Amnesia" (Compliance Lapse):**
+   Traditional systems treated approval as a once-a-year snapshot. Once the EoA was granted, regulatory oversight ceased until the following year. In reality, safety certificates expire, faculty resign mid-term, and bank guarantees lapse.
+5. **Audit Fragility:**
+   When regulatory decisions were challenged in the High Court or Central Vigilance Commission (CVC), reconstructing the precise sequence of committee opinions, timestamps, and uploaded exhibits was time-consuming, incomplete, or vulnerable to claim disputes.
+
+---
+
+### The ANUMATI Paradigm Shift
+
+ANUMATI v2 resolves these structural failures through a high-assurance, 7-tier architecture built on the following core innovations:
+
+1. **Policy as Code (`apps.policy` & `apps.routing`):**
+   Regulatory rules, stage progressions, and calendar timelines are expressed as declarative, version-controlled JSON schemas (`PolicyVersion`). Changes in annual APH bylaws can be simulated in dry-run mode and activated without code redeployment.
+2. **Guarded State Transitions with Concurrency Locks (`apps.cases` & `apps.decisions`):**
+   Cases move strictly along approved route graphs. Using pessimistic database locking (`select_for_update()`), concurrent officer actions or race conditions are structurally impossible.
+3. **Two-Way Deficiency Communication Cycles (`apps.communications` & `apps.deadlines`):**
+   When scrutinizing officers identify deficiencies, an explicit deficiency cycle is opened. A dedicated countdown clock starts for the institution, and failure to respond before the statutory SLA deadline triggers automated escalations.
+4. **Coordinated Expert Visit Committee (EVC) Protocols (`apps.evc`):**
+   Slot scheduling, member confirmations, geo-tagged observation uploads, and peer consensus mechanisms ensure that physical inspections are objective, time-bound, and immune to single-person compromise.
+5. **Year-Round Continuous Compliance Monitoring (`apps.compliance`):**
+   Approval is treated as a dynamic, continuous contract. ANUMATI monitors the lifespan of every legal document (e.g., Fire NOC validity, Land Lease duration). Expired documents automatically flag non-compliance and notify regional directors.
+6. **Zero-Trust File Quarantine Pipeline (`apps.documents`):**
+   Files never bypass security. Every upload is isolated in quarantine, validated against MIME-type policies, fingerprinted with SHA-256 cryptographic hashes, and served exclusively via short-lived, authenticated download tokens.
+7. **Append-Only Tamper-Evident Audit Ledger (`apps.audit`):**
+   Every transition, rejection, committee comment, or deadline extension generates an immutable audit record containing actor identity, role, IP address, timestamp, and payload diffs.
+
+---
+
+### Key Stakeholders & Value Delivered
+
+| Stakeholder | Legacy Pain Point | Value Delivered by ANUMATI |
+| :--- | :--- | :--- |
+| **Technical Institutions** | Uncertainty, long wait times, lack of deficiency clarity. | Instant intake confirmation, transparent real-time case timeline, self-service deficiency portal, renewal reminders. |
+| **Regional Officers & Scrutiny Members** | Overwhelming case loads, manual paperwork, disorganized files. | Dedicated workbenches, automated checklist validation, structured deficiency recording, clear statutory SLA timers. |
+| **Expert Visit Committee (EVC)** | Complex scheduling conflicts, paper reports, risk of dispute. | Synchronized slot booking, instant digital observation recording, secure geo-tagged video and photo reference attachments. |
+| **Competent Authority (Council / EC)** | Pressure to approve without verified stage compliance. | Guarded disposition dashboard that structurally prevents granting approvals until every prerequisite stage is completed. |
+| **Oversight Auditors & Vigilance Bodies** | Inability to audit decisions retroactively without missing data. | Real-time national/regional pendency heatmaps, officer bottleneck analytics, sealed immutable audit trails. |
+| **Students & Parents** | Risk of enrolling in unaccredited or non-compliant colleges. | Continuous post-approval compliance tracking guarantees that approved institutions maintain valid safety and faculty standards throughout the academic year. |
 
 ---
 
