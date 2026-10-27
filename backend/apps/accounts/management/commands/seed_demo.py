@@ -29,23 +29,27 @@ from apps.cases.models import ApplicationCase
 from apps.communications.models import CommunicationTemplate
 from apps.audit.services import record_audit_event
 
+# Synthetic, local-only credential. Only reachable when DEBUG is on (see handle()).
+DEFAULT_LOCAL_DEMO_PASSWORD = "DemoOnly-2026-Local!"
+
 
 class Command(BaseCommand):
     help = "Seed synthetic institutions and demonstration policies in an explicitly enabled local environment."
 
     @transaction.atomic
     def handle(self, *args, **options):
-        if (
-            not settings.DEBUG
-            or not settings.ALLOW_DEMONSTRATION_POLICIES
-            or os.environ.get("ALLOW_SYNTHETIC_SEED") != "true"
-        ):
+        # Local debug mode is the only place this command may run, so in that mode
+        # the opt-in flag and password fall back to safe local defaults. An explicit
+        # ALLOW_SYNTHETIC_SEED=false (or any non-"true" value) still disables seeding.
+        local_debug = bool(settings.DEBUG and settings.ALLOW_DEMONSTRATION_POLICIES)
+        allow_seed = os.environ.get(
+            "ALLOW_SYNTHETIC_SEED", "true" if local_debug else ""
+        )
+        if not local_debug or allow_seed.lower() != "true":
             raise CommandError(
                 "Synthetic seeding requires DEBUG, demonstration policies and ALLOW_SYNTHETIC_SEED=true."
             )
-        password = os.environ.get("DEMO_PASSWORD")
-        if not password:
-            raise CommandError("Set DEMO_PASSWORD for local synthetic accounts.")
+        password = os.environ.get("DEMO_PASSWORD") or DEFAULT_LOCAL_DEMO_PASSWORD
         region, _ = Region.objects.get_or_create(
             code="DEMO-NORTH",
             defaults={
