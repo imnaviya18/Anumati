@@ -69,22 +69,24 @@ it("displays bureau workload and escalation owners with read-only case drill-dow
           },
   }));
   render(
-    <OversightDetails
-      snapshot={{
-        status_by_bureau: [
-          { responsible_bureau__name: "Demo Bureau", count: 3 },
-        ],
-        workload_by_officer: [
-          {
-            assigned_officer__username: "reviewer",
-            stage_type: "SCRUTINY",
-            active_cases: 2,
-          },
-        ],
-      }}
-      region="DEMO"
-      bureau="B1"
-    />,
+    <MemoryRouter>
+      <OversightDetails
+        snapshot={{
+          status_by_bureau: [
+            { responsible_bureau__name: "Demo Bureau", count: 3 },
+          ],
+          workload_by_officer: [
+            {
+              assigned_officer__username: "reviewer",
+              stage_type: "SCRUTINY",
+              active_cases: 2,
+            },
+          ],
+        }}
+        region="DEMO"
+        bureau="B1"
+      />
+    </MemoryRouter>,
   );
   expect(screen.getByText("Demo Bureau")).toBeInTheDocument();
   expect(screen.getByText("reviewer")).toBeInTheDocument();

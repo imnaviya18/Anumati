@@ -1,9 +1,12 @@
-import { canOpenWorkspace } from "../workspaces";
+import { canOpenWorkspace, workspaceLinks } from "../workspaces";
 import { useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
-export function homeFor() {
-  return "/";
+export function homeFor(user) {
+  const match = workspaceLinks.find(([, , roles]) =>
+    user?.roles?.some((role) => roles.includes(role)),
+  );
+  return match ? match[0] : "/";
 }
 export function LoginPage() {
   const { user, loading, signIn, error: sessionError } = useAuth();
