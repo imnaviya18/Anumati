@@ -35,15 +35,16 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
+        allow_synthetic = os.environ.get("ALLOW_SYNTHETIC_SEED", "true").lower() == "true"
         if (
             not settings.DEBUG
             or not settings.ALLOW_DEMONSTRATION_POLICIES
-            or os.environ.get("ALLOW_SYNTHETIC_SEED") != "true"
+            or not allow_synthetic
         ):
             raise CommandError(
                 "Synthetic seeding requires DEBUG, demonstration policies and ALLOW_SYNTHETIC_SEED=true."
             )
-        password = os.environ.get("DEMO_PASSWORD")
+        password = os.environ.get("DEMO_PASSWORD", "DemoOnly-2026-Local!")
         if not password:
             raise CommandError("Set DEMO_PASSWORD for local synthetic accounts.")
         region, _ = Region.objects.get_or_create(

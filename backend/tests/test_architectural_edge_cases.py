@@ -592,3 +592,16 @@ class ArchitecturalEdgeCaseTests(TestCase):
             )
             self.assertEqual(updated.accepted_version_id, doc_renewal_candidate.id)
             self.assertEqual(updated.state, ValidityMonitorState.VALID)
+
+    def test_regional_officer_intake_transition_permitted(self):
+        """Edge case 13: Verify Regional Officer is permitted to submit/import applications for regional institutions (Sheet 02 A1)."""
+        case = submit_or_import_application(
+            actor=self.ro_user,
+            institution=self.inst,
+            academic_cycle="2026-27",
+            application_category="EOA",
+            source_id="RO-INTAKE-TEST-001",
+        )
+        self.assertIn(case.status, [CaseStatus.IN_STAGE_PROCESSING, CaseStatus.SUBMITTED])
+        self.assertEqual(case.institution, self.inst)
+

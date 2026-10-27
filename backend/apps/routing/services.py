@@ -33,7 +33,7 @@ PERMITTED_CASE_TRANSITIONS: dict[tuple[str, str], TransitionRule] = {
         source_status=CaseStatus.DRAFT,
         action="SUBMIT_APPLICATION",
         destination_status=CaseStatus.SUBMITTED,
-        allowed_roles=frozenset({RoleCode.INSTITUTION_USER, RoleCode.BUREAU_OFFICER}),
+        allowed_roles=frozenset({RoleCode.INSTITUTION_USER, RoleCode.BUREAU_OFFICER, RoleCode.REGIONAL_OFFICER}),
     ),
     (CaseStatus.SUBMITTED, "RESOLVE_ROUTE_SUCCESS"): TransitionRule(
         source_status=CaseStatus.SUBMITTED,
